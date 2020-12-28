@@ -1,4 +1,4 @@
-# js-kata-ATM
+# ATM
 
 Write a function that implements an ATM. There are 500€, 200€, 100€, 50€, 20€ and 10€ bills.
 
