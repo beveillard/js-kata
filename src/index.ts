@@ -3,10 +3,11 @@ const billsAvailable = [500, 200, 100, 50, 20, 10];
 export function atm(amount) {
   let billsWithdrawn = [];
 
-  let withdraw = function (billValue, billIndex) {
+  function withdraw(billValue) {
     let rest = amount % billValue;
 
-    billsWithdrawn[billIndex] = (amount - rest) / billValue;
+    //billsWithdrawn.push((amount - rest) / billValue);
+    billsWithdrawn = [...billsWithdrawn, (amount - rest) / billValue];
     amount = rest;
   }
 

@@ -14,6 +14,13 @@ it("Should return 1 x 10 bill", function () {
   expect(atm(10)).toEqual([0, 0, 0, 0, 0, 1]);
 });
 
+it("Should return 1 x 20 + 1 x 10 bills", function () {
+  // Given
+  // When
+  // Then
+  expect(atm(30)).toEqual([0, 0, 0, 0, 1, 1]);
+});
+
 it("Should return 1 x 200 + 1 x 50 + 1 x 20 bills", function () {
   // Given
   // When
