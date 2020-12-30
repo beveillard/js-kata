@@ -1,17 +1,20 @@
 const billsAvailable = [500, 200, 100, 50, 20, 10];
 
 export function atm(amount) {
-  let billsWithdrawn = [];
+  let rest = amount;
 
-  function withdraw(billValue) {
-    let rest = amount % billValue;
+  return billsAvailable.map(
+    (billValue) => {
+      let nbBills;
+      [nbBills, rest] = withdraw(billValue, rest);
+      return nbBills;
+    }
+  );
+}
 
-    //billsWithdrawn.push((amount - rest) / billValue);
-    billsWithdrawn = [...billsWithdrawn, (amount - rest) / billValue];
-    amount = rest;
-  }
+function withdraw(billValue, amount) {
+  let rest = amount % billValue;
+  let nbBills = (amount - rest) / billValue;
 
-  billsAvailable.forEach(withdraw);
-
-  return billsWithdrawn;
+  return [nbBills, rest];
 }
