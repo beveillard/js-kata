@@ -1,20 +1,30 @@
-const billsAvailable = [500, 200, 100, 50, 20, 10];
+class Pack {
+  billValue: number;
+  nbBills: number;
+}
 
-export function atm(amount) {
-  let rest = amount;
+class PackWithdrawal {
+  pack: Pack;
+  rest: number;
+}
 
-  return billsAvailable.map(
+export function withdraw(amount: number): Array<Pack> {
+  let rest: number = amount;
+
+  return billValues.map(
     (billValue) => {
-      let nbBills;
-      [nbBills, rest] = withdraw(billValue, rest);
-      return nbBills;
+      let result: PackWithdrawal = withdrawPack(billValue, rest);
+      rest = result.rest;
+      return result.pack;
     }
   );
 }
 
-function withdraw(billValue, amount) {
-  let rest = amount % billValue;
-  let nbBills = (amount - rest) / billValue;
+export function withdrawPack(billValue: number, amount: number): PackWithdrawal {
+  let rest: number = amount % billValue;
+  let nbBills: number = (amount - rest) / billValue;
 
-  return [nbBills, rest];
+  return { pack: { billValue, nbBills }, rest: rest };
 }
+
+const billValues: Array<number> = [500, 200, 100, 50, 20, 10];

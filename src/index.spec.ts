@@ -1,29 +1,73 @@
-import { atm } from ".";
+import {
+  withdrawPack,
+  withdraw,
+} from ".";
 
-it("Should return 1 x 500 bill", function () {
-  // Given
-  // When
-  // Then
-  expect(atm(500)).toEqual([1, 0, 0, 0, 0, 0]);
+describe("Test of withdrawPack", function () {
+
+  it("Should return 1 x 500 bill and rest 50", function () {
+    expect(withdrawPack(500, 550)).toEqual(
+      {
+        pack: { billValue: 500, nbBills: 1 },
+        rest: 50,
+      }
+    );
+  });
+
 });
 
-it("Should return 1 x 10 bill", function () {
-  // Given
-  // When
-  // Then
-  expect(atm(10)).toEqual([0, 0, 0, 0, 0, 1]);
-});
+describe("Test of withdraw", function () {
 
-it("Should return 1 x 20 + 1 x 10 bills", function () {
-  // Given
-  // When
-  // Then
-  expect(atm(30)).toEqual([0, 0, 0, 0, 1, 1]);
-});
+  it("Should return 1 x 500 bill", function () {
+    expect(withdraw(500)).toEqual(
+      [
+        { billValue: 500, nbBills: 1 },
+        { billValue: 200, nbBills: 0 },
+        { billValue: 100, nbBills: 0 },
+        { billValue: 50, nbBills: 0 },
+        { billValue: 20, nbBills: 0 },
+        { billValue: 10, nbBills: 0 },
+      ]
+    );
+  });
 
-it("Should return 1 x 200 + 1 x 50 + 1 x 20 bills", function () {
-  // Given
-  // When
-  // Then
-  expect(atm(270)).toEqual([0, 1, 0, 1, 1, 0]);
+  it("Should return 1 x 10 bill", function () {
+    expect(withdraw(10)).toEqual(
+      [
+        { billValue: 500, nbBills: 0 },
+        { billValue: 200, nbBills: 0 },
+        { billValue: 100, nbBills: 0 },
+        { billValue: 50, nbBills: 0 },
+        { billValue: 20, nbBills: 0 },
+        { billValue: 10, nbBills: 1 },
+      ]
+    );
+  });
+
+  it("Should return 1 x 20 + 1 x 10 bills", function () {
+    expect(withdraw(30)).toEqual(
+      [
+        { billValue: 500, nbBills: 0 },
+        { billValue: 200, nbBills: 0 },
+        { billValue: 100, nbBills: 0 },
+        { billValue: 50, nbBills: 0 },
+        { billValue: 20, nbBills: 1 },
+        { billValue: 10, nbBills: 1 },
+      ]
+    );
+  });
+
+  it("Should return 1 x 200 + 1 x 50 + 1 x 20 bills", function () {
+    expect(withdraw(270)).toEqual(
+      [
+        { billValue: 500, nbBills: 0 },
+        { billValue: 200, nbBills: 1 },
+        { billValue: 100, nbBills: 0 },
+        { billValue: 50, nbBills: 1 },
+        { billValue: 20, nbBills: 1 },
+        { billValue: 10, nbBills: 0 },
+      ]
+    );
+  });
+
 });
