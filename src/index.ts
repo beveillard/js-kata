@@ -1,30 +1,32 @@
-class Pack {
+const BILL_VALUES: number[] = [500, 200, 100, 50, 20, 10];
+
+class Wad {
   billValue: number;
   nbBills: number;
 }
 
-class PackWithdrawal {
-  pack: Pack;
+class Withdrawal {
+  wads: Wad[];
   rest: number;
 }
 
-export function withdraw(amount: number): Array<Pack> {
-  let rest: number = amount;
+export function withdraw(amount: number): Withdrawal {
 
-  return billValues.map(
-    (billValue) => {
-      let result: PackWithdrawal = withdrawPack(billValue, rest);
-      rest = result.rest;
-      return result.pack;
-    }
-  );
+  function withdrawNextBillValue({ wads: withdrawals, rest }: Withdrawal, billValue: number): Withdrawal {
+    const withdrawal: Withdrawal = withdrawWad(billValue, rest);
+
+    return {
+      wads: [...withdrawals, ...withdrawal.wads],
+      rest: withdrawal.rest,
+    };
+  }
+
+  return BILL_VALUES.reduce(withdrawNextBillValue, { wads: [], rest: amount });
 }
 
-export function withdrawPack(billValue: number, amount: number): PackWithdrawal {
-  let rest: number = amount % billValue;
-  let nbBills: number = (amount - rest) / billValue;
+export function withdrawWad(billValue: number, amount: number): Withdrawal {
+  const rest: number = amount % billValue;
+  const nbBills: number = (amount - rest) / billValue;
 
-  return { pack: { billValue, nbBills }, rest: rest };
+  return { wads: [{ billValue: billValue, nbBills }], rest };
 }
-
-const billValues: Array<number> = [500, 200, 100, 50, 20, 10];
